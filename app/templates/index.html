@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ARMA RP Мессенджер</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="messenger-container">
+        <h1>ARMA RP Мессенджер</h1>
+        
+        <div class="characters-section">
+            <h3>Выберите персонажа:</h3>
+            <form method="post" action="/send_message/">
+                <select name="character_name" required>
+                    <option value="">-- Выберите персонажа --</option>
+                    {% for character in characters %}
+                    <option value="{{ character.name }}">{{ character.name }}</option>
+                    {% endfor %}
+                </select>
+        </div>
+
+        <div class="chat-container">
+            <div class="messages-list">
+                {% for message in messages %}
+                <div class="message">
+                    <strong>{{ message.character_name }}:</strong> 
+                    {{ message.content }}
+                    <small>{{ message.timestamp }}</small>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="message-input">
+                <input type="text" name="content" placeholder="Введите сообщение..." required>
+                <button type="submit">Отправить</button>
+            </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Автообновление каждые 5 секунд -->
+    <script>
+        setTimeout(() => {
+            window.location.reload();
+        }, 5000);
+    </script>
+</body>
+</html>
